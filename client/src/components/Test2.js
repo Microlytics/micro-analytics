@@ -1,10 +1,11 @@
 import React from 'react'
-import useHover from '../utils/useHover';
+import useHover from '../hooks/useHover';
 
 function Test2() {
-    const [ref] = useHover();
+    const [ref, sendData] = useHover();
+
     return (
-        <div name='test2' ref={ref}>
+        <div microlytics={sendData({ 'key2': 'value2' })} name='test2' ref={ref}>
             TEST2
         </div>
     )
