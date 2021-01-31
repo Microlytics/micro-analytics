@@ -1,6 +1,9 @@
 // libraries
 import uuid from 'react-uuid';
 
+// microlytics import
+import Microlytics from './components/Microlytics';
+
 // Varaibles
 var trackingKey = '';
 var sessionId = '';
@@ -18,34 +21,29 @@ const getValues = () => {
   return [trackingKey, sessionId, baseUrl, MICROLYTICS_EVENTS];
 };
 
-export { initialize, getValues };
+// export functions
+function sendHoverEvents() {
+  if (MICROLYTICS_EVENTS.length > 0) {
+    const eventsLength = MICROLYTICS_EVENTS.length;
 
-// // hook event logs
-// export var MICROLYTICS_HOVER_EVENTS = [];
+    let eventArr = MICROLYTICS_EVENTS.slice(0, eventsLength - 1);
+    MICROLYTICS_EVENTS = MICROLYTICS_EVENTS.slice(eventsLength);
 
-// // export functions
-// function sendHoverEvents() {
-//   if (MICROLYTICS_HOVER_EVENTS.length > 0) {
-//     let eventArr = JSON.parse(JSON.stringify(MICROLYTICS_HOVER_EVENTS));
-//     console.log(eventArr);
-//     MICROLYTICS_HOVER_EVENTS = [];
-
-//     fetch(`${baseUrl}/api/v1/logs/arr`, {
-//       method: 'POST',
-//       body: JSON.stringify({ dataArray: eventArr }),
-//       headers: { 'Content-type': 'application/json; charset=UTF-8' },
-//     })
-//       .then((response) => console.log('sent'))
-//       .catch((err) => console.log(err));
-//   } else {
-//     console.log('nothing sent');
-//   }
-// }
+    fetch(baseUrl, {
+      method: 'POST',
+      body: JSON.stringify({ dataArray: eventArr }),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    })
+      .then((response) => console.log('sent'))
+      .catch((err) => console.log(err));
+  }
+}
 
 function sendData() {
-  console.log(new Date());
-  console.log(MICROLYTICS_EVENTS);
+  sendHoverEvents();
   setTimeout(sendData, 5000);
 }
 
 sendData();
+
+export { initialize, getValues, Microlytics };

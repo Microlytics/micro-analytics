@@ -1,5 +1,5 @@
 import React from 'react';
-import Microlytics from '../microlytics/components/Microlytics';
+import { Microlytics } from '../microlytics';
 
 function Test1() {
   return (
