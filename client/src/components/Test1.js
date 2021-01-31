@@ -1,9 +1,9 @@
 import React from 'react';
-import MicrolyticsComponent from '../microlytics/components/MicrolyticsComponent';
+import Microlytics from '../microlytics/components/Microlytics';
 
 function Test1() {
   return (
-    <MicrolyticsComponent
+    <Microlytics
       component={
         <button name='test1' className='btn btn-success shadow lift mx-0 mb-4'>
           Example Button 1

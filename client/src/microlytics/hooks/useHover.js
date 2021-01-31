@@ -29,7 +29,6 @@ const useHover = (ref, metadata, config) => {
   useEffect(() => {
     if (config.hover && config.hover === true) {
       const node = ref.current;
-      console.log(node);
       if (node) {
         node.addEventListener('mouseenter', enter);
         node.addEventListener('mouseleave', leave);

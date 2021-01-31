@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 import useHover from '../hooks/useHover';
 import useOnClick from '../hooks/useOnClick';
 
-const MicrolyticsComponent = ({ component: Component, metadata, config }) => {
+const Microlytics = ({ component: Component, metadata, config }) => {
   const ref = useRef();
 
   useHover(ref, metadata, config);
@@ -15,4 +15,4 @@ const MicrolyticsComponent = ({ component: Component, metadata, config }) => {
   return <Fragment>{cloneElement(Component, { ref: ref })}</Fragment>;
 };
 
-export default MicrolyticsComponent;
+export default Microlytics;
