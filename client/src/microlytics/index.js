@@ -6,15 +6,17 @@ import Microlytics from './components/Microlytics';
 
 // Varaibles
 var trackingKey = '';
-var sessionId = '';
-var baseUrl = '';
+var sessionId = uuid();
+var baseUrl = 'https://www.edisonbox.ca/api/v1/logs/arr';
 export var MICROLYTICS_EVENTS = [];
 
 const initialize = (key, url = null, id = null) => {
   trackingKey = key;
-  sessionId = id ? id : uuid();
-  baseUrl = url ? url : 'https://www.edisonbox.ca/api/v1/logs/arr';
+  sessionId = id ? id : sessionId;
+  baseUrl = url ? url : baseUrl;
   MICROLYTICS_EVENTS = [];
+
+  sendData();
 };
 
 const getValues = () => {
@@ -23,7 +25,7 @@ const getValues = () => {
 
 // export functions
 function sendHoverEvents() {
-  if (MICROLYTICS_EVENTS.length > 0) {
+  if (MICROLYTICS_EVENTS.length > 0 && trackingKey !== '') {
     const eventsLength = MICROLYTICS_EVENTS.length;
 
     let eventArr = MICROLYTICS_EVENTS.slice(0, eventsLength - 1);
@@ -33,9 +35,7 @@ function sendHoverEvents() {
       method: 'POST',
       body: JSON.stringify({ dataArray: eventArr }),
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    })
-      .then((response) => console.log('sent'))
-      .catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
   }
 }
 
@@ -43,7 +43,5 @@ function sendData() {
   sendHoverEvents();
   setTimeout(sendData, 5000);
 }
-
-sendData();
 
 export { initialize, getValues, Microlytics };
