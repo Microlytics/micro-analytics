@@ -1,0 +1,19 @@
+{
+  "name": "microlytics",
+  "version": "1.0.0",
+  "description": "a tracking library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-uuid": "^1.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.1"
+  }
+}
