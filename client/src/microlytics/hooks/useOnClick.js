@@ -14,9 +14,10 @@ function useOnClick(ref, metadata, config) {
         payload: metadata,
         time: new Date(),
         systemMetaData: {
-          x: event.screenX,
-          y: event.screenY,
-          scroll: event.clientY,
+          pageLocation: {
+            host: window.location.hostname,
+            path: window.location.pathname,
+          },
           timeSincePageLoad: new Date(event.timeStamp)
             .toISOString()
             .substr(11, 11),

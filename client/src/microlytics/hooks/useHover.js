@@ -11,6 +11,15 @@ const useHover = (ref, metadata, config) => {
       event: 'Hover Enter',
       payload: metadata,
       time: new Date(),
+      systemMetaData: {
+        pageLocation: {
+          host: window.location.hostname,
+          path: window.location.pathname,
+        },
+        timeSincePageLoad: new Date(event.timeStamp)
+          .toISOString()
+          .substr(11, 11),
+      },
     };
 
     MICROLYTICS_EVENTS.push(eventObj);
@@ -22,6 +31,15 @@ const useHover = (ref, metadata, config) => {
       event: 'Hover Exit',
       payload: metadata,
       time: new Date(),
+      systemMetaData: {
+        pageLocation: {
+          host: window.location.hostname,
+          path: window.location.pathname,
+        },
+        timeSincePageLoad: new Date(event.timeStamp)
+          .toISOString()
+          .substr(11, 11),
+      },
     };
     MICROLYTICS_EVENTS.push(eventObj);
   };
