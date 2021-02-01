@@ -10,9 +10,8 @@ var sessionId = uuid();
 var baseUrl = 'https://www.edisonbox.ca/api/v1/logs/arr';
 export var MICROLYTICS_EVENTS = [];
 
-const initialize = (key, url = null, id = null) => {
+const initialize = (key, url = null) => {
   trackingKey = key;
-  sessionId = id ? id : sessionId;
   baseUrl = url ? url : baseUrl;
   MICROLYTICS_EVENTS = [];
 
@@ -24,7 +23,7 @@ const getValues = () => {
 };
 
 // export functions
-function sendHoverEvents() {
+function sendHoverEvents(session, key) {
   if (MICROLYTICS_EVENTS.length > 0 && trackingKey !== '') {
     const eventsLength = MICROLYTICS_EVENTS.length;
 
@@ -33,14 +32,18 @@ function sendHoverEvents() {
 
     fetch(baseUrl, {
       method: 'POST',
-      body: JSON.stringify({ dataArray: eventArr }),
+      body: JSON.stringify({
+        dataArray: eventArr,
+        sessionId: session,
+        trackingKey: key,
+      }),
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
     }).catch((err) => console.log(err));
   }
 }
 
 function sendData() {
-  sendHoverEvents();
+  sendHoverEvents(trackingKey, sessionId);
   setTimeout(sendData, 5000);
 }
 
