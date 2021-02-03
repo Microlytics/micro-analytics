@@ -1,47 +1,27 @@
 import { useEffect } from 'react';
-import uuid from 'react-uuid';
 
 // microlytics
-import { MICROLYTICS_EVENTS } from '../index';
+import { createEvent } from '../index';
 
 const useHover = (ref, metadata, config) => {
   const enter = (event) => {
-    const eventObj = {
-      id: uuid(),
-      event: 'Hover Enter',
-      payload: metadata,
-      time: new Date(),
-      systemMetaData: {
-        pageLocation: {
-          host: window.location.hostname,
-          path: window.location.pathname,
-        },
-        timeSincePageLoad: new Date(event.timeStamp)
-          .toISOString()
-          .substr(11, 11),
+    createEvent('Hover Enter', metadata, {
+      pageLocation: {
+        host: window.location.hostname,
+        path: window.location.pathname
       },
-    };
-
-    MICROLYTICS_EVENTS.push(eventObj);
+      timeSincePageLoad: new Date(event.timeStamp).toISOString().substr(11, 11)
+    });
   };
 
   const leave = (event) => {
-    const eventObj = {
-      id: uuid(),
-      event: 'Hover Exit',
-      payload: metadata,
-      time: new Date(),
-      systemMetaData: {
-        pageLocation: {
-          host: window.location.hostname,
-          path: window.location.pathname,
-        },
-        timeSincePageLoad: new Date(event.timeStamp)
-          .toISOString()
-          .substr(11, 11),
+    createEvent('Hover Exit', metadata, {
+      pageLocation: {
+        host: window.location.hostname,
+        path: window.location.pathname
       },
-    };
-    MICROLYTICS_EVENTS.push(eventObj);
+      timeSincePageLoad: new Date(event.timeStamp).toISOString().substr(11, 11)
+    });
   };
 
   useEffect(() => {

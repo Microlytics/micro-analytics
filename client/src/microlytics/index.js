@@ -25,6 +25,21 @@ const initializeUser = (user) => {
   userObj = user;
 };
 
+const createEvent = (eventName, payload, metaData) => {
+  const eventObj = {
+    event: eventName,
+    payload: payload,
+    time: new Date(),
+    systemMetaData: metaData
+  };
+
+  if (userObj !== {}) {
+    eventObj.user = userObj;
+  }
+
+  MICROLYTICS_EVENTS.push(eventObj);
+};
+
 // export functions
 function sendHoverEvents(session, key, user) {
   if (MICROLYTICS_EVENTS.length > 0 && trackingKey !== '') {
@@ -39,10 +54,6 @@ function sendHoverEvents(session, key, user) {
       trackingKey: key
     };
 
-    if (user !== {}) {
-      body.user = user;
-    }
-
     fetch(baseUrl, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -52,10 +63,10 @@ function sendHoverEvents(session, key, user) {
 }
 
 function sendData() {
-  sendHoverEvents(trackingKey, sessionId, userObj);
+  sendHoverEvents(sessionId, trackingKey, userObj);
   setTimeout(sendData, 5000);
 }
 
 sendData();
 
-export { initialize, getValues, Microlytics, initializeUser };
+export { initialize, getValues, Microlytics, initializeUser, createEvent };

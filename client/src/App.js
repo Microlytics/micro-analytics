@@ -7,7 +7,10 @@ import Test2 from './components/Test2';
 import { initialize, getValues } from './microlytics';
 
 console.log(getValues());
-initialize('mykey', 'myurl2');
+initialize(
+  'db19666c-08bf-489f-9d4b-c651eb52c5ac',
+  'http://localhost:5000/api/v1/events'
+);
 console.log(getValues());
 
 function App() {
